@@ -84,14 +84,36 @@ while True:  # WMO weather interpretation codes (WW)
         weather_code = "Thunderstorm with slight and heavy hail"
     break
 
+while True:
+    wind_cardinal = my_data["current_weather"]["winddirection"]
+    if wind_cardinal >= 0 < 25:
+        wind_cardinal = "North"
+    elif wind_cardinal >= 25 < 65:
+        wind_cardinal = "North East"
+    elif wind_cardinal >= 65 < 115:
+        wind_cardinal = "East"
+    elif wind_cardinal >= 115 < 155:
+        wind_cardinal = "South East"
+    elif wind_cardinal >= 155 < 205:
+        wind_cardinal = "South"
+    elif wind_cardinal >= 205 < 245:
+        wind_cardinal = "South West"
+    elif wind_cardinal >= 245 < 295:
+        wind_cardinal = "West"
+    elif wind_cardinal >= 295 < 335:
+        wind_cardinal = "North West"
+    elif wind_cardinal >= 335 < 360:
+        wind_cardinal = "North"
+    break
+
+
 print(f"The current tempurature is:", my_data["current_weather"]["temperature"],
       my_data["daily_units"]["temperature_2m_max"], "\nToday you can expect",
-      weather_code, "weather,""\nwith a windspead of:", my_data["current_weather"]["windspeed"],
-      "mph in the direction of:", my_data["current_weather"]["winddirection"])
+      weather_code, "weather,""\nwith a windspead of:", my_data["current_weather"]["windspeed"], wind_cardinal)
 
 print(f"You can expect a high of", my_data["daily"]["temperature_2m_max"][0],
       my_data["daily_units"]["temperature_2m_max"], "and a low of", my_data["daily"]["temperature_2m_min"][0],
       my_data["daily_units"]["temperature_2m_max"])
 print(f"The real feel today will be between", my_data["daily"]["apparent_temperature_max"][0],
-      my_data["daily_units"]["temperature_2m_max"], "-", my_data["daily"]["apparent_temperature_min"][0],
+      my_data["daily_units"]["temperature_2m_max"], "and", my_data["daily"]["apparent_temperature_min"][0],
       my_data["daily_units"]["temperature_2m_max"])
