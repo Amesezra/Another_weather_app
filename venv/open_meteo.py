@@ -19,71 +19,23 @@ with open('weather_data.json', 'w', encoding='utf-8') as f:
 with open('weather_data.json', 'r', encoding='utf-8') as f:
     my_data = json.loads(f.read())
 
-print("Printing weather code details for the next seven days:")
-print(my_data["daily"]["weathercode"])
-print()
 
+#  while True:  # WMO weather interpretation codes (WW)
+weather_code_dict = {0:"Clear sky", 1:'Mainly clear', 2:"partly cloudy", 3:"overcast", 45:"Fog",
+                     48:"Depositing rime fog", 51:"Light drizzle", 53:"Moderate drizzle", 55:"Dense drizzle",
+                     56:"Light freezing drizzle", 57:"Heavy freezing drizzle", 61:"Slight rain", 63:"Moderate rain",
+                     65:"Heavy rain", 66:"Light freezing rain", 67:"Moderate freezing rain", 71:"Slight snowfall",
+                     73:"Moderate snowfall", 75:"Heavy snowfall", 77:"Snow grains", 80:"Slight rain showers",
+                     81:"Moderate rain showers", 82:"Violent rain showers", 85:"Heavy snow showers",
+                     86:"Slight Thunderstorms", 95:"Moderate Thunderstorms", 96:"Thunderstorms with slight hail",
+                     99:"Thunderstorms with slight and heavy hail"}
 
-while True:  # WMO weather interpretation codes (WW)
-    weather_code = my_data["daily"]["weathercode"][0]
-    if weather_code == 0:
-        weather_code = "Clear sky"
-    if weather_code == 1:
-        weather_code = 'Mainly clear'
-    elif weather_code == 2:
-        weather_code = "partly cloudy"
-    elif weather_code == 3:
-        weather_code = "overcast"
-    elif weather_code == 45:
-        weather_code = "Fog"
-    elif weather_code == 48:
-        weather_code = "Depositing rime fog"
-    elif weather_code == 51:
-        weather_code = "Light drizzle"
-    elif weather_code == 53:
-        weather_code = "Moderate drizzle"
-    elif weather_code == 55:
-        weather_code = "Dense drizzle"
-    elif weather_code == 56:
-        weather_code = "Light freezing drizzle"
-    elif weather_code == 57:
-        weather_code = "Heavy freezing drizzle"
-    elif weather_code == 61:
-        weather_code = "Slight rain"
-    elif weather_code == 63:
-        weather_code = "Moderate rain"
-    elif weather_code == 65:
-        weather_code = "Heavy rain"
-    elif weather_code == 66:
-        weather_code = "Light freezing rain"
-    elif weather_code == 67:
-        weather_code = "Moderate freezing rain"
-    elif weather_code == 71:
-        weather_code = "Slight snowfall"
-    elif weather_code == 73:
-        weather_code = "Moderate snowfall"
-    elif weather_code == 75:
-        weather_code = "Heavy snowfall"
-    elif weather_code == 77:
-        weather_code = "Snow grains"
-    elif weather_code == 80:
-        weather_code = "Slight rain showers"
-    elif weather_code == 81:
-        weather_code = "Moderate rain showers"
-    elif weather_code == 82:
-        weather_code = "Violent rain showers"
-    elif weather_code == 85:
-        weather_code = "Heavy snow showers"
-    elif weather_code == 86:
-        weather_code = "Slight Thunderstorm"
-    elif weather_code == 95:
-        weather_code = "Moderate Thunderstorm"
-    elif weather_code == 96:
-        weather_code = "Thunderstorm with slight hail"
-    elif weather_code == 99:
-        weather_code = "Thunderstorm with slight and heavy hail"
-    break
+''' list comprehension used in next line to pair key/values from both dictionaries. Matches WMO code from JSON into a 
+dictionary list that has name of the weather type. avoids long elif statement previously used.
+".get" needed to be used to avoid key value errors from other pairs not matching, 
+returns 'none' if null pair is encountered.'''
 
+dict3 = {k:list(map(weather_code_dict.get, vs)) for k, vs in my_data["daily"].items()}
 while True:
     wind_cardinal = my_data["current_weather"]["winddirection"]
     if wind_cardinal >= 0 < 25:
@@ -107,10 +59,11 @@ while True:
     break
 
 
+print("Printing weather code details for the next seven days:")
+print(dict3["weathercode"], "\n")
 print(f"The current tempurature is:", my_data["current_weather"]["temperature"],
       my_data["daily_units"]["temperature_2m_max"], "\nToday you can expect",
-      weather_code, "weather,""\nwith a windspead of:", my_data["current_weather"]["windspeed"], wind_cardinal)
-
+      dict3["weathercode"][0], "\nwith a windspead of:", my_data["current_weather"]["windspeed"], wind_cardinal)
 print(f"You can expect a high of", my_data["daily"]["temperature_2m_max"][0],
       my_data["daily_units"]["temperature_2m_max"], "and a low of", my_data["daily"]["temperature_2m_min"][0],
       my_data["daily_units"]["temperature_2m_max"])
