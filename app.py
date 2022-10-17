@@ -20,7 +20,7 @@ def index():
 def register():
 
     # Validate submission
-    if not request.form.get("name") or request.form.get("forecast") not in WEATHER:
+    if not request.form.get("location") or request.form.get("forecast") not in WEATHER:
         return render_template("failure.html")
 
     # Confirm registration

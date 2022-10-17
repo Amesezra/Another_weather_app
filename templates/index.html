@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
 
+
 {% block body %}
-<h1>Register</h1>
+<h1>Weather</h1>
 <form action="/register" method="post">
-    <input autocomplete="off" autofocus name="name" placeholder="Name" type="text">
-    <select name="forecast">
-        <option disabled selected>Forecast</option>
+    <input autocomplete="off" autofocus name="location" placeholder="Location" type="checkbox">
+    <label>Cleveland</label>
         {% for forecast in forecasts %}
-        <option value="{{ forecast }}">{{ forecast }}</option>
+            <input name="forecast" type="radio" value="{{ forecast }}"> {{ forecast }}
         {% endfor %}
-    </select>
     <input type="submit" value="Register">
 </form>
+
 {% endblock %}
