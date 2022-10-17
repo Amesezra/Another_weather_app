@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+
+{% block body %}
+print(f"The current tempurature is:", my_data["current_weather"]["temperature"],
+my_data["daily_units"]["temperature_2m_max"], "\nToday you can expect",
+dict3["weathercode"][0], "\nwith a windspeed of:", my_data["current_weather"]["windspeed"], wind_cardinal)
+{% endblock %}

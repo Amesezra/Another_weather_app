@@ -140,3 +140,4 @@ print(f"You can expect a high of", my_data["daily"]["temperature_2m_max"][0],
 print(f"The real feel today will be between", my_data["daily"]["apparent_temperature_max"][0],
       my_data["daily_units"]["temperature_2m_max"], "and", my_data["daily"]["apparent_temperature_min"][0],
       my_data["daily_units"]["temperature_2m_max"])
+
